@@ -1,16 +1,17 @@
-Package: sebastian
-Title: What the Package Does (One Line, Title Case)
+Package: ninTrendo
+Title: Perform long-term high frequency Google Trends queries by overlapping
 Version: 0.0.0.9000
-Authors@R: 
-    person(given = "First",
-           family = "Last",
+Authors@R: person("Sebastian","Sanin-Restrepo",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to
-    pick a license
+           email = "econosanin@hotmail.com")
+Description: Reconstruct Google Trends high frequency data for extended periods. Using
+             overlapping windows and letting for long-term trend correction, this 
+             package allows the search for any single query of daily, weekly, monthly
+             or quarterly frequency, covering longer periods than those allowed by 
+             Google Trends direct search.
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Imports: gtrendsR,tempdisagg,tsbox,data.table,dplyr,ggplot2,lubridate,timetk,stats
