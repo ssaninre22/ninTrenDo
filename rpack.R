@@ -29,3 +29,10 @@ use_gpl_license(3)
 devtools::document()
 ?long_gt
 ?ninTrendo
+
+usethis::use_readme_rmd()
+
+# Install
+
+install()
+

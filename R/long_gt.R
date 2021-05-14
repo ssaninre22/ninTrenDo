@@ -171,7 +171,7 @@ long_gt <- function(keyword=NULL,geo="",input.sdate,input.edate,
       
       g1 <- ggplot2::ggplot(res.final)+
         ggplot2::geom_line(ggplot2::aes(x=date,y=gt_full,col=gt_full))+
-        ggplot2::geom_area(ggplot2::aes(x = date,y=100*overlap),alpha=0.15)+
+        ggplot2::geom_area(ggplot2::aes(x = date,y=max(gt_full)*overlap),alpha=0.15)+
         ggplot2::scale_color_continuous(low = "lightblue", high = "darkblue")+
         ggplot2::theme_bw()+
         ggplot2::labs(x="",y=paste0("Relative Volume Search: ",keyword),
@@ -298,7 +298,7 @@ long_gt <- function(keyword=NULL,geo="",input.sdate,input.edate,
       
       g1 <- ggplot2::ggplot(res.final)+
         ggplot2::geom_line(ggplot2::aes(x=date,y=gt_full,col=gt_full))+
-        ggplot2::geom_area(ggplot2::aes(x = date,y=100*overlap),alpha=0.15)+
+        ggplot2::geom_area(ggplot2::aes(x = date,y=max(gt_full)*overlap),alpha=0.15)+
         ggplot2::scale_color_continuous(low = "lightblue", high = "darkblue")+
         ggplot2::theme_bw()+
         ggplot2::labs(x="",y=paste0("Relative Volume Search: ",keyword),
