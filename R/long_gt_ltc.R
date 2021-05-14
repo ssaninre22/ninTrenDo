@@ -18,10 +18,10 @@
 #' * "q" - Quarterly.
 #' @param td.method Character indicating method for temporal disaggregation. "denton" refers
 #'                  to "Denton-Cholette" and "chow-lin" (default) referes to "chow-lin maxlog".
-#' @param input.delta An integer indicating the window length of the query in months 
-#'                    (if input.frequency="d") or years (if input.frequency="w"). 
-#'                    Notice that it will be not used in another case.
-#' @param input.ol.win An integer indicating the overlapping window length. 
+#' @param input.delta A nonzero positive integer indicating the window length of the 
+#'                    query in months  (if input.frequency="d") or years 
+#'                    (if input.frequency="w"). Notice that it will be not used in another case.
+#' @param input.ol.win A nonzero positive integer indicating the overlapping window length. 
 #'                     Default is 1 (month/year).
 #' @param input.type  A character string defining the Google product for which the trend 
 #'                    query if preformed. Valid options are: "web" (default), "news",
@@ -41,6 +41,8 @@
 #' @author Sebastian Sanin-Restrepo
 #' @seealso long_gt_ltc
 #' @importFrom dplyr %>% 
+#' @importFrom lubridate %m+% 
+#' @importFrom lubridate %m-% 
 #' @export
 #' @examples 
 #' # Search for daily data on word hotel in Colombia from 2014 to 2021
@@ -56,39 +58,65 @@ long_gt_ltc <- function(keyword=NULL,geo="",input.sdate,input.edate,
                         input.frequency="d",td.method="chow-lin",
                         input.delta=6,input.ol.win=1,
                         input.type="web",input.categ=0){
-  
+  # Define global variables
   hits <- overlap <- gt_full <- value <- NULL
   
-  
   # Initial checks ----
+   # Keyword checks
+  if(is.null(keyword)){
+    stop("keyword could not be NULL or empty.")
+  }
+  if(length(keyword)>1){
+    stop("keyword must be a single query.")
+  }
+    # Dates checks
   if(!lubridate::is.Date(input.sdate)){input.sdate <- as.Date(input.sdate)}
   if(!lubridate::is.Date(input.edate)){input.edate <- as.Date(input.edate)}
   
-  stopifnot(
-    is.vector(keyword),length(keyword)<2,
-    is.numeric(input.delta),is.numeric(input.ol.win),
-    input.delta>input.ol.win
-  )
-  
-  if(!geo%in%c(unique(gtrendsR::countries$country_code),
-                   unique(gtrendsR::countries$sub_code),
-                   unique(gtrendsR::countries$name))&geo!=""){
-    stop("Country code not valid. Please use 'data(countries)' to 
-         retreive valid codes.)")
-  }
-  if(!input.categ %in% gtrendsR::categories[, "id"]){
-    stop("Category code not valid. Please use 'data(categories)' 
-         to retreive valid codes.",call. = FALSE)
-  }
   if(input.sdate>input.edate){
     stop("Start date could not be lower than End date.",call. = FALSE)
   }
   if(lubridate::year(input.sdate)<2005){
     stop("Initial year could not be before 2005",call. = F)
   }
+  if(input.edate>(Sys.Date()-1)){
+    stop("Final date could not be greater than yesterday",call. = F)
+  }
+  
+   # Windows and frequency checks
+  if(!is.numeric(input.delta)|!is.numeric(input.ol.win)){
+    stop("input.delta and input.ol.win should be numeric.")
+  }
+  if(input.delta<=input.ol.win){
+    stop("input.delta must be greater than input.ol.win")
+  }
+  if(input.delta<1|input.ol.win<1){
+    stop("Input.delta and input.ol.win measuring window and overlapping length should
+         be nonzero positive integers.")
+  }
+  if(!is.character(input.frequency)){
+    stop("input.frequency should be a character")
+  }
+  if((input.frequency=="d"|input.frequency=="D")&((input.delta+input.ol.win)>7)){
+    stop("Sum of input.delta and input.ol.win should be lower than 8 for daily data")
+  }
+  if((input.frequency=="w"|input.frequency=="W")&((input.delta+input.ol.win)>3)){
+    stop("Sum of input.delta and input.ol.win should be lower than 4 for weekly data")
+  }
+    # Geography and category checks
+  if(!geo%in%c(unique(gtrendsR::countries$country_code),
+                   unique(gtrendsR::countries$sub_code),
+                   unique(gtrendsR::countries$name))&geo!=""){
+    stop("Country code not valid. Please use 'gtrendsR::countries' to 
+         retreive valid codes.)")
+  }
+  if(!input.categ %in% gtrendsR::categories[, "id"]){
+    stop("Category code not valid. Please use 'gtrendsR::categories' 
+         to retreive valid codes.",call. = FALSE)
+  }
   
   # Daily Gtrends ----
-  if(input.frequency=="d"){
+  if(input.frequency=="d"|input.frequency=="D"){
     num.months <- lubridate::time_length(
       lubridate::interval(input.sdate,input.edate),"months")
     num.years <- lubridate::time_length(
@@ -106,19 +134,20 @@ long_gt_ltc <- function(keyword=NULL,geo="",input.sdate,input.edate,
       
       # Backward date sequence
       n.windows <- ceiling(ceiling(num.months)/delta)
-      bwd_sdate <- edate-months(n.windows*delta)
-      edate0 <- edate-months(ol.win)
+      bwd_sdate <- edate%m-%months(n.windows*delta)
+      edate0 <- edate%m-%months(ol.win)
       
       sdate0 <- ifelse(bwd_sdate<sdate,bwd_sdate,
                        ifelse(bwd_sdate==sdate,sdate,
-                              bwd_sdate-months(1))) %>% 
+                              bwd_sdate%m-%months(1))) %>% 
         as.Date(origin = '1970-01-01')
       
       pm <- dplyr::tibble(s = seq(lubridate::ymd(sdate0),
                            lubridate::ymd(edate0), by = delta.txt), 
                    e = seq(lubridate::ymd(sdate0),
-                           lubridate::ymd(edate0), by = delta.txt) + 
-                     months(delta)+months(ol.win) -lubridate::days(1))
+                           lubridate::ymd(edate0), by = delta.txt) %m+% 
+                     months(delta)%m+%months(ol.win))
+      
       
       if(suppressWarnings(lubridate::year(as.Date(as.numeric(pm[1,1]),
                                        origin = "1970-01-01"))<2005)){
@@ -268,7 +297,7 @@ long_gt_ltc <- function(keyword=NULL,geo="",input.sdate,input.edate,
   }
   
   # Weekly Gtrends ----
-  if(input.frequency=="w"){
+  if(input.frequency=="w"|input.frequency=="W"){
     num.years <- lubridate::time_length(lubridate::interval(input.sdate,input.edate),
                              unit = "years")
     if(num.years>5){
@@ -448,7 +477,7 @@ long_gt_ltc <- function(keyword=NULL,geo="",input.sdate,input.edate,
   }
   
   # Monthly Gtrends ----
-  if(input.frequency=="m"){
+  if(input.frequency=="m"|input.frequency=="M"){
     print("Neither interpolation nor correction done in monthly searches")
     periods <- paste(as.Date(as.numeric(input.sdate),origin = '1970-01-01'), 
                      as.Date(as.numeric(input.edate),origin = '1970-01-01'))
@@ -478,7 +507,7 @@ long_gt_ltc <- function(keyword=NULL,geo="",input.sdate,input.edate,
   }
   
   # Quarterly Gtrends ----
-  if(input.frequency=="q"){
+  if(input.frequency=="q"|input.frequency=="Q"){
     print("Neither interpolation nor correction done in quarterly searches")
     periods <- paste(as.Date(as.numeric(input.sdate),origin = '1970-01-01'), 
                      as.Date(as.numeric(input.edate),origin = '1970-01-01'))

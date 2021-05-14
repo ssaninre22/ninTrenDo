@@ -57,9 +57,9 @@ library(ninTrenDo)
 ## basic example code
 res <- long_gt_ltc(keyword = "hotel",geo="CO",
                  input.sdate = as.Date("2014-01-01"),
-                 input.edate = as.Date("2021-04-16"),
+                 input.edate = as.Date("2021-05-01"),
                  input.frequency = "d",td.method="chow-lin",
-                 input.delta = 6,
+                 input.delta = 5,
                  input.ol.win = 1)
 
 res$plot

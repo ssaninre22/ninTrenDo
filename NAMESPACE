@@ -3,3 +3,5 @@
 export(long_gt)
 export(long_gt_ltc)
 importFrom(dplyr,"%>%")
+importFrom(lubridate,"%m+%")
+importFrom(lubridate,"%m-%")

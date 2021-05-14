@@ -35,11 +35,11 @@ all for global queries. Multiple regions are NOT possible right now.}
 \item "q" - Quarterly.
 }}
 
-\item{input.delta}{An integer indicating the window length of the query in months
+\item{input.delta}{A nonzero positive integer indicating the window length of the query in months
 (if input.frequency="d") or years (if input.frequency="w").
 Notice that it will be not used in another case.}
 
-\item{input.ol.win}{An integer indicating the overlapping window length.
+\item{input.ol.win}{A nonzero positive integer indicating the overlapping window length.
 Default is 1 (month/year).}
 
 \item{input.type}{A character string defining the Google product for which the trend
