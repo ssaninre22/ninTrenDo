@@ -121,8 +121,7 @@ long_gt <- function(keyword=NULL,geo="",input.sdate,input.edate,
       if(suppressWarnings(pm[nrow(pm),2]>=edate)){
         pm[nrow(pm),2] <- edate
       }
-      
-      # GTrends loop
+    # GTrends loop
       res <- data.frame(date=seq(sdate0,edate,1))
       cnames <- c("date")
       max.ol.mat <- matrix(NA,nrow = (nrow(pm)-1),ncol=ncol(pm))
