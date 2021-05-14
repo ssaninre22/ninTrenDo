@@ -1,4 +1,4 @@
-#' ninTrendo: Perform long-term high frequency Google Trends queries by overlapping
+#' ninTrenDo: Perform long-term high frequency Google Trends queries by overlapping
 #'
 #' Reconstruct Google Trends high frequency data for extended periods. Using
 #' overlapping windows and letting for long-term trend correction, this 
@@ -6,12 +6,12 @@
 #' or quarterly frequency, covering longer periods than those allowed by 
 #' Google Trends direct search.
 #' 
-#' @section ninTrendo functions:
+#' @section ninTrenDo functions:
 #' * long_gt: Long term Google Trends queries by overlapped windows
 #' * long_gt_ltc: Corrected by long-term trend - Long term Google Trends 
 #'  queries by overlapped windows.
 #' @docType package
-#' @name ninTrendo
+#' @name ninTrenDo
 NULL
 #> NULL
 

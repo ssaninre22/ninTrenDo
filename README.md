@@ -1,12 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ninTrendo
+# ninTrenDo
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of ninTrendo is to perform long-term high frequency Google
+The goal of *ninTrenDo* is to perform long-term high frequency Google
 Trends queries by overlapping. This package let you to reconstruct
 Google Trends high frequency data for extended periods. Using
 overlapping windows and letting for long-term trend correction, this
@@ -16,11 +16,11 @@ Google Trends direct search.
 
 ## Installation
 
-You can install the released version of ninTrendo from
+You can install the released version of ninTrenDo from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
-install.packages("ninTrendo")
+install.packages("ninTrenDo")
 ```
 
 And the development version from [GitHub](https://github.com/) with:
@@ -38,7 +38,7 @@ first example shows how to obtain daily data for the word **hotel** in
 Colombia (CO) during the period January 1st, 2014 until April 16, 2021.
 
 ``` r
-library(ninTrendo)
+library(ninTrenDo)
 ## basic example code
 res <- long_gt(keyword = "hotel",geo="CO",
                  input.sdate = as.Date("2014-01-01"),
@@ -71,7 +71,7 @@ using long-term search index by using temporal dissagregation of monthly
 data based on the daily long-term index built by overlapping windows.
 
 ``` r
-library(ninTrendo)
+library(ninTrenDo)
 ## basic example code
 res <- long_gt_ltc(keyword = "hotel",geo="CO",
                  input.sdate = as.Date("2014-01-01"),

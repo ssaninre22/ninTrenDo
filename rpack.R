@@ -28,7 +28,7 @@ use_gpl_license(3)
 # Documentation
 devtools::document()
 ?long_gt
-?ninTrendo
+?ninTrenDo
 
 usethis::use_readme_rmd()
 
