@@ -44,7 +44,7 @@ res <- long_gt(keyword = "hotel",geo="CO",
                  input.sdate = as.Date("2014-01-01"),
                  input.edate = as.Date("2021-04-16"),
                  input.frequency = "d",input.delta = 6,
-                 input.ol.win = 1,input.type="web",input.categ=0)
+                 input.ol.win = 1)
 #> [1] "GT sample = 1/15"
 #> [1] "GT sample = 2/15"
 #> [1] "GT sample = 3/15"
@@ -75,28 +75,25 @@ library(ninTrenDo)
 ## basic example code
 res <- long_gt_ltc(keyword = "hotel",geo="CO",
                  input.sdate = as.Date("2014-01-01"),
-                 input.edate = as.Date("2021-05-01"),
+                 input.edate = as.Date("2021-04-16"),
                  input.frequency = "d",td.method="chow-lin",
-                 input.delta = 5,
+                 input.delta = 6,
                  input.ol.win = 1)
-#> [1] "GT sample = 1/18"
-#> [1] "GT sample = 2/18"
-#> [1] "GT sample = 3/18"
-#> [1] "GT sample = 4/18"
-#> [1] "GT sample = 5/18"
-#> [1] "GT sample = 6/18"
-#> [1] "GT sample = 7/18"
-#> [1] "GT sample = 8/18"
-#> [1] "GT sample = 9/18"
-#> [1] "GT sample = 10/18"
-#> [1] "GT sample = 11/18"
-#> [1] "GT sample = 12/18"
-#> [1] "GT sample = 13/18"
-#> [1] "GT sample = 14/18"
-#> [1] "GT sample = 15/18"
-#> [1] "GT sample = 16/18"
-#> [1] "GT sample = 17/18"
-#> [1] "GT sample = 18/18"
+#> [1] "GT sample = 1/15"
+#> [1] "GT sample = 2/15"
+#> [1] "GT sample = 3/15"
+#> [1] "GT sample = 4/15"
+#> [1] "GT sample = 5/15"
+#> [1] "GT sample = 6/15"
+#> [1] "GT sample = 7/15"
+#> [1] "GT sample = 8/15"
+#> [1] "GT sample = 9/15"
+#> [1] "GT sample = 10/15"
+#> [1] "GT sample = 11/15"
+#> [1] "GT sample = 12/15"
+#> [1] "GT sample = 13/15"
+#> [1] "GT sample = 14/15"
+#> [1] "GT sample = 15/15"
 #> [1] "Correction with monthly trend in process - Method: chow-lin"
 #> Loading required namespace: tsbox
 
