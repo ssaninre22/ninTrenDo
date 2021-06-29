@@ -46,7 +46,6 @@ res <- long_gt(keyword = "hotel",geo="CO",
                  input.edate = as.Date("2021-04-16"),
                  input.frequency = "d",input.delta = 6,
                  input.ol.win = 1)
-
 res$plot
 ```
 
@@ -61,7 +60,5 @@ res <- long_gt_ltc(keyword = "hotel",geo="CO",
                  input.frequency = "d",td.method="chow-lin",
                  input.delta = 6,
                  input.ol.win = 1)
-
 res$plot
 ```
-

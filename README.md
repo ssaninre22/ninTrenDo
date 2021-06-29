@@ -60,7 +60,6 @@ res <- long_gt(keyword = "hotel",geo="CO",
 #> [1] "GT sample = 13/15"
 #> [1] "GT sample = 14/15"
 #> [1] "GT sample = 15/15"
-
 res$plot
 ```
 
@@ -96,7 +95,6 @@ res <- long_gt_ltc(keyword = "hotel",geo="CO",
 #> [1] "GT sample = 15/15"
 #> [1] "Correction with monthly trend in process - Method: chow-lin"
 #> Loading required namespace: tsbox
-
 res$plot
 ```
 

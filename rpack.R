@@ -36,3 +36,14 @@ usethis::use_readme_rmd()
 
 install()
 
+
+keyword = "Ethereum"
+geo=""
+input.sdate = as.Date("2014-09-01")
+input.edate = as.Date("2021-06-26")
+input.frequency = "d"
+td.method="chow-lin"
+input.delta = 6
+input.ol.win = 1
+input.type="web"
+input.categ=0

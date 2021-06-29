@@ -53,7 +53,7 @@
 #'                 input.delta = 6,
 #'                 input.ol.win = 1)
 
- 
+
 long_gt_ltc <- function(keyword=NULL,geo="",input.sdate,input.edate,
                         input.frequency="d",td.method="chow-lin",
                         input.delta=6,input.ol.win=1,
@@ -170,7 +170,10 @@ long_gt_ltc <- function(keyword=NULL,geo="",input.sdate,input.edate,
         temp <- gtrendsR::gtrends(keyword = keyword, geo = geo,time = periods,
                         onlyInterest = T,category = input.categ,
                         gprop = input.type)$interest_over_time %>% 
-          dplyr::select(date,hits) %>% dplyr::mutate(date=as.Date(date))
+          dplyr::select(date,hits) %>% 
+          dplyr::mutate(date=as.Date(date),
+                        hits=as.numeric(ifelse(hits=="<1",0.5,hits))
+                        )
         
         cnames <- c(cnames,paste0("smpl",i))
         res <- res %>% merge(y=temp,by="date",all.x = T)
@@ -213,9 +216,11 @@ long_gt_ltc <- function(keyword=NULL,geo="",input.sdate,input.edate,
         mres <- gtrendsR::gtrends(keyword = keyword, geo = geo,time = mdates,
                         onlyInterest = T,category = input.categ,
                         gprop = input.type)$interest_over_time %>% 
-          dplyr::select(date,hits) %>% dplyr::mutate(date=as.Date(date)) 
-        
-        
+          dplyr::select(date,hits) %>% 
+          dplyr::mutate(date=as.Date(date),
+                        hits=as.numeric(ifelse(hits=="<1",0.5,hits))
+                        )
+       
         lf.res <- stats::ts(mres$hits,
                      start = c(lubridate::year(dplyr::first(mres$date)),
                                lubridate::month(dplyr::first(mres$date))),
@@ -279,7 +284,9 @@ long_gt_ltc <- function(keyword=NULL,geo="",input.sdate,input.edate,
       res <- gtrendsR::gtrends(keyword = keyword, geo = geo,time = periods,
                      onlyInterest = T,category = input.categ,
                      gprop = input.type)$interest_over_time %>% 
-        dplyr::select(date,hits) %>% dplyr::mutate(date=as.Date(date))
+        dplyr::select(date,hits) %>% 
+        dplyr::mutate(date=as.Date(date),
+                      hits=as.numeric(ifelse(hits=="<1",0.5,hits)))
       
       res.full <- data.frame(date=res$date,gt_full=res$hits)
       res.final <- res.full %>% dplyr::filter(date>=input.sdate,date<=input.edate)
@@ -354,7 +361,9 @@ long_gt_ltc <- function(keyword=NULL,geo="",input.sdate,input.edate,
         temp <- gtrendsR::gtrends(keyword = keyword, geo = geo,time = periods,
                         onlyInterest = T,category = input.categ,
                         gprop = input.type)$interest_over_time %>% 
-          dplyr::select(date,hits) %>% dplyr::mutate(date=as.Date(date))
+          dplyr::select(date,hits) %>% 
+          dplyr::mutate(date=as.Date(date),
+                        hits=as.numeric(ifelse(hits=="<1",0.5,hits)))
         
         cnames <- c(cnames,paste0("smpl",i))
         res <- res %>% merge(y=temp,by="date",all.x = T)
@@ -395,7 +404,9 @@ long_gt_ltc <- function(keyword=NULL,geo="",input.sdate,input.edate,
         mres <- gtrendsR::gtrends(keyword = keyword, geo = geo,time = mdates,
                         onlyInterest = T,category = input.categ,
                         gprop = input.type)$interest_over_time %>% 
-          dplyr::select(date,hits) %>% dplyr::mutate(date=as.Date(date))
+          dplyr::select(date,hits) %>% 
+          dplyr::mutate(date=as.Date(date),
+                        hits=as.numeric(ifelse(hits=="<1",0.5,hits)))
         
         lf.res <- stats::ts(mres$hits,
                      start = c(lubridate::year(dplyr::first(mres$date)),
@@ -460,7 +471,9 @@ long_gt_ltc <- function(keyword=NULL,geo="",input.sdate,input.edate,
       res <- gtrendsR::gtrends(keyword = keyword, geo = geo,time = periods,
                      onlyInterest = T,category = input.categ,
                      gprop = input.type)$interest_over_time %>% 
-        dplyr::select(date,hits) %>% dplyr::mutate(date=as.Date(date))
+        dplyr::select(date,hits) %>% 
+        dplyr::mutate(date=as.Date(date),
+                      hits=as.numeric(ifelse(hits=="<1",0.5,hits)))
       
       res.full <- data.frame(date=res$date,gt_full=res$hits)
       res.final <- res.full %>% dplyr::filter(date>=input.sdate,date<=input.edate)
@@ -485,7 +498,9 @@ long_gt_ltc <- function(keyword=NULL,geo="",input.sdate,input.edate,
     res <- gtrendsR::gtrends(keyword = keyword, geo = geo,time = periods,
                    onlyInterest = T,category = input.categ,
                    gprop = input.type)$interest_over_time %>% 
-      dplyr::select(date,hits) %>% dplyr::mutate(date=as.Date(date))
+      dplyr::select(date,hits) %>% 
+      dplyr::mutate(date=as.Date(date),
+                    hits=as.numeric(ifelse(hits=="<1",0.5,hits)))
     
     res.full <- data.frame(date=res$date,gt_full=res$hits)
     res.final <- res.full %>% dplyr::filter(date>=input.sdate,date<=input.edate)
@@ -515,7 +530,9 @@ long_gt_ltc <- function(keyword=NULL,geo="",input.sdate,input.edate,
     res <- gtrendsR::gtrends(keyword = keyword, geo = geo,time = periods,
                    onlyInterest = T,category = input.categ,
                    gprop = input.type)$interest_over_time %>% 
-      dplyr::select(date,hits) %>% dplyr::mutate(date=as.Date(date))
+      dplyr::select(date,hits) %>% 
+      dplyr::mutate(date=as.Date(date),
+                    hits=as.numeric(ifelse(hits=="<1",0.5,hits)))
     
     res.full <- data.frame(date=res$date,gt_full=res$hits)
     res.final <- res.full %>% dplyr::filter(date>=input.sdate,date<=input.edate)

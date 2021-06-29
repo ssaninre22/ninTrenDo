@@ -162,7 +162,9 @@ long_gt <- function(keyword=NULL,geo="",input.sdate,input.edate,
         temp <- gtrendsR::gtrends(keyword = keyword, geo = geo,time = periods,
                         onlyInterest = T,category = input.categ,
                         gprop = input.type)$interest_over_time %>% 
-          dplyr::select(date,hits) %>% dplyr::mutate(date=as.Date(date))
+          dplyr::select(date,hits) %>% 
+          dplyr::mutate(date=as.Date(date),
+                        hits=as.numeric(ifelse(hits=="<1",0.5,hits)))
         
         cnames <- c(cnames,paste0("smpl",i))
         res <- res %>% merge(y=temp,by="date",all.x = T)
@@ -213,7 +215,9 @@ long_gt <- function(keyword=NULL,geo="",input.sdate,input.edate,
       res <- gtrendsR::gtrends(keyword = keyword, geo = geo,time = periods,
                      onlyInterest = T,category = input.categ,
                      gprop = input.type)$interest_over_time %>% 
-        dplyr::select(date,hits) %>% dplyr::mutate(date=as.Date(date))
+        dplyr::select(date,hits) %>% 
+        dplyr::mutate(date=as.Date(date),
+                      hits=as.numeric(ifelse(hits=="<1",0.5,hits)))
       
       res.full <- data.frame(date=res$date,gt_full=res$hits)
       res.final <- res.full %>% dplyr::filter(date>=input.sdate,date<=input.edate)
@@ -288,7 +292,10 @@ long_gt <- function(keyword=NULL,geo="",input.sdate,input.edate,
         temp <- gtrendsR::gtrends(keyword = keyword, geo = geo,time = periods,
                         onlyInterest = T,category = input.categ,
                         gprop = input.type)$interest_over_time %>% 
-          dplyr::select(date,hits) %>% dplyr::mutate(date=as.Date(date))
+          dplyr::select(date,hits) %>% 
+          dplyr::mutate(date=as.Date(date),
+                        hits=as.numeric(ifelse(hits=="<1",0.5,hits))
+                        )
         
         cnames <- c(cnames,paste0("smpl",i))
         res <- res %>% merge(y=temp,by="date",all.x = T)
@@ -341,7 +348,9 @@ long_gt <- function(keyword=NULL,geo="",input.sdate,input.edate,
       res <- gtrendsR::gtrends(keyword = keyword, geo = geo,time = periods,
                      onlyInterest = T,category = input.categ,
                      gprop = input.type)$interest_over_time %>% 
-        dplyr::select(date,hits) %>% dplyr::mutate(date=as.Date(date))
+        dplyr::select(date,hits) %>% 
+        dplyr::mutate(date=as.Date(date),
+                      hits=as.numeric(ifelse(hits=="<1",0.5,hits)))
       
       res.full <- data.frame(date=res$date,gt_full=res$hits)
       res.final <- res.full %>% dplyr::filter(date>=input.sdate,date<=input.edate)
@@ -363,7 +372,9 @@ long_gt <- function(keyword=NULL,geo="",input.sdate,input.edate,
     res <- gtrendsR::gtrends(keyword = keyword, geo = geo,time = periods,
                    onlyInterest = T,category = input.categ,
                    gprop = input.type)$interest_over_time %>% 
-      dplyr::select(date,hits) %>% dplyr::mutate(date=as.Date(date))
+      dplyr::select(date,hits) %>% 
+      dplyr::mutate(date=as.Date(date),
+                    hits=as.numeric(ifelse(hits=="<1",0.5,hits)))
     
     res.full <- data.frame(date=res$date,gt_full=res$hits)
     res.final <- res.full %>% dplyr::filter(date>=input.sdate,date<=input.edate)
@@ -391,7 +402,9 @@ long_gt <- function(keyword=NULL,geo="",input.sdate,input.edate,
     res <- gtrendsR::gtrends(keyword = keyword, geo = geo,time = periods,
                    onlyInterest = T,category = input.categ,
                    gprop = input.type)$interest_over_time %>% 
-      dplyr::select(date,hits) %>% dplyr::mutate(date=as.Date(date))
+      dplyr::select(date,hits) %>% 
+      dplyr::mutate(date=as.Date(date),
+                    hits=as.numeric(ifelse(hits=="<1",0.5,hits)))
     
     res.full <- data.frame(date=res$date,gt_full=res$hits)
     res.final <- res.full %>% dplyr::filter(date>=input.sdate,date<=input.edate)
